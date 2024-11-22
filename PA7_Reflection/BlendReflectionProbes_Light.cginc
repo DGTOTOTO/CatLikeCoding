@@ -124,18 +124,21 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 	#if defined(FORWARD_BASE_PASS)
 		indirectLight.diffuse += max(0, ShadeSH9(float4(i.normal, 1)));
 		float3 reflectionDir = reflect(-viewDir, i.normal);
-        Unity_GlossyEnvironmentData envData;
-        envData.roughness = 1 - _Smoothness;
-        envData.reflUVW = BoxProjection(
-            reflectionDir, i.worldPos,
-            unity_SpecCube0_ProbePosition,
-            unity_SpecCube0_BoxMin, unity_SpecCube0_BoxMax
-        );
-        indirectLight.specular = Unity_GlossyEnvironment(
-            UNITY_PASS_TEXCUBE(unity_SpecCube0), unity_SpecCube0_HDR, envData
-        );
 
-        envData.reflUVW = BoxProjection(
+		Unity_GlossyEnvironmentData envData;
+		envData.roughness = 1 - _Smoothness;
+
+		envData.reflUVW = BoxProjection(
+			reflectionDir, i.worldPos,
+			unity_SpecCube0_ProbePosition,
+			unity_SpecCube0_BoxMin, unity_SpecCube0_BoxMax
+		);
+
+		float3 probe0 = Unity_GlossyEnvironment(
+			UNITY_PASS_TEXCUBE(unity_SpecCube0), unity_SpecCube0_HDR, envData
+		);
+			
+		envData.reflUVW = BoxProjection(
 			reflectionDir, i.worldPos,
 			unity_SpecCube1_ProbePosition,
 			unity_SpecCube1_BoxMin, unity_SpecCube0_BoxMax
