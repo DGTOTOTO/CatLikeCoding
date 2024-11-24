@@ -1,8 +1,8 @@
 #if !defined(SHADOWS_RECEIVINGSHADOW_LIGHT)
 #define SHADOWS_RECEIVINGSHADOW_LIGHT
 #define UNITY_PBS_USE_BRDF3
-#include "AutoLight.cginc"
 #include "UnityPBSLighting.cginc"
+#include "AutoLight.cginc"
 
 float4 _Tint;
 sampler2D _MainTex, _DetailTex;
