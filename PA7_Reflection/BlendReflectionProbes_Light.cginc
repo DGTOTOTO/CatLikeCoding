@@ -141,7 +141,7 @@ UnityIndirect CreateIndirectLight (Interpolators i, float3 viewDir) {
 		envData.reflUVW = BoxProjection(
 			reflectionDir, i.worldPos,
 			unity_SpecCube1_ProbePosition,
-			unity_SpecCube1_BoxMin, unity_SpecCube0_BoxMax
+			unity_SpecCube1_BoxMin, unity_SpecCube1_BoxMax
 		);
 
 		#if UNITY_SPECCUBE_BLENDING
