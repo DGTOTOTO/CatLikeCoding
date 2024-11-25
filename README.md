@@ -1,8 +1,12 @@
 # Introduction
 the accompanying code for CatLikeCoding notes
-这是 CatlikeCoding 笔记的配套代码
 
-*笔记 is here: https://dgtototo.gitbook.io/arcade*
+这是 CatlikeCoding - Rendering 部分笔记的配套代码
+
+
+
+**笔记 is here: https://dgtototo.gitbook.io/arcade/rendering/introduction**
+
 [正在更新中...]
 
 
