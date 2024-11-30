@@ -16,9 +16,9 @@ public class UserInterface3_GUI: ShaderGUI {
     }
 
     void DoMain(){
-        GUILayout.Label("Main Map", EditorStyles.boldLabel);
+        GUILayout.Label("Main Maps", EditorStyles.boldLabel);
         MaterialProperty mainTex = FindProperty("_MainTex");
-        editor.TexturePropertySingleLine(MakeLabel(mainTex, "Albedo(ANKI)"), mainTex, FindProperty("_Tint"));
+        editor.TexturePropertySingleLine(MakeLabel("Albedo", "Albedo(RGB)"), mainTex, FindProperty("_Tint"));
         DoMetallic();
         DoSmoothness();
         DoNormals();
@@ -28,35 +28,35 @@ public class UserInterface3_GUI: ShaderGUI {
     void DoNormals() {
         MaterialProperty map = FindProperty("_NormalMap");
         editor.TexturePropertySingleLine(
-            MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null
+            MakeLabel("Normals"), map, map.textureValue ? FindProperty("_BumpScale") : null
         );
     }
 
     void DoMetallic() {
         MaterialProperty slider = FindProperty("_Metallic");
         EditorGUI.indentLevel += 2;
-        editor.ShaderProperty(slider, MakeLabel(slider));
+        editor.ShaderProperty(slider, MakeLabel("Metallic"));
         EditorGUI.indentLevel -= 2;
     }
 
     void DoSmoothness() {
         MaterialProperty slider = FindProperty("_Smoothness");
         EditorGUI.indentLevel += 2;
-        editor.ShaderProperty(slider, MakeLabel(slider));
+        editor.ShaderProperty(slider, MakeLabel("Smoothness"));
         EditorGUI.indentLevel -= 2;
     }
 
     void DoSecondary() {
         GUILayout.Label("Secondary Maps", EditorStyles.boldLabel);
         MaterialProperty detailTex = FindProperty("_DetailTex");
-        editor.TexturePropertySingleLine(MakeLabel(detailTex, "Albedo(RGB) multiplied by 2"), detailTex);
+        editor.TexturePropertySingleLine(MakeLabel("Detail Albedo", "Albedo(RGB) multiplied by 2"), detailTex);
         DoSecondaryNormals();
         editor.TextureScaleOffsetProperty(detailTex);
     }
 
     void DoSecondaryNormals() {
         MaterialProperty map = FindProperty("_DetailNormalMap");
-        editor.TexturePropertySingleLine(MakeLabel(map), map, map.textureValue ? FindProperty("_DetailBumpScale") : null);
+        editor.TexturePropertySingleLine(MakeLabel("Detail Normals"), map, map.textureValue ? FindProperty("_DetailBumpScale") : null);
     }
 
     MaterialProperty FindProperty(string name) {
