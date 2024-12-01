@@ -38,7 +38,7 @@ public class MixMetalAndNonMetal_GUI: ShaderGUI {
 		MaterialProperty map = FindProperty("_MetallicMap");
 		// STEP 3: BeginChangeCheck & EndChangeCheck 函数监控调用 SetKeyword 函数
 		EditorGUI.BeginChangeCheck();
-		// STEP 3: 添加材质选择窗口，调整 slider 与 map 逻辑为 “OR”
+		// STEP 2: 添加材质选择窗口，调整 slider 与 map 逻辑为 “OR”
 		editor.TexturePropertySingleLine(MakeLabel(map, "Metallic(R)"), map, map.textureValue ? null : FindProperty("_Metallic"));
 		if (EditorGUI.EndChangeCheck()) {
 			SetKeyword("_METALLIC_MAP", map.textureValue);
