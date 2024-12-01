@@ -18,7 +18,7 @@ public class UserInterface2_GUI: ShaderGUI {
     void DoMain(){
         GUILayout.Label("Main Maps", EditorStyles.boldLabel);
         MaterialProperty mainTex = FindProperty("_MainTex");
-        editor.TexturePropertySingleLine(MakeLabel("Albedo", "Albedo(RGB)"), mainTex, FindProperty("_Tint"));
+        editor.TexturePropertySingleLine(MakeLabel(mainTex, "Albedo(RGB)"), mainTex, FindProperty("_Tint"));
         DoMetallic();
         DoSmoothness();
         DoNormals();
@@ -29,7 +29,7 @@ public class UserInterface2_GUI: ShaderGUI {
         MaterialProperty map = FindProperty("_NormalMap");
         // hide bump scale when there's no bump map
         editor.TexturePropertySingleLine(
-            MakeLabel("Normals"), map, map.textureValue ? FindProperty("_BumpScale") : null
+            MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null
         );
     }
     
@@ -37,14 +37,14 @@ public class UserInterface2_GUI: ShaderGUI {
     void DoMetallic() {
         MaterialProperty slider = FindProperty("_Metallic");
         EditorGUI.indentLevel += 2;
-        editor.ShaderProperty(slider, MakeLabel("Metallic"));
+        editor.ShaderProperty(slider, MakeLabel(slider));
         EditorGUI.indentLevel -= 2;
     }
 
     void DoSmoothness() {
         MaterialProperty slider = FindProperty("_Smoothness");
         EditorGUI.indentLevel += 2;
-        editor.ShaderProperty(slider, MakeLabel("Smoothness"));
+        editor.ShaderProperty(slider, MakeLabel(slider));
         EditorGUI.indentLevel -= 2;
     }
 
@@ -59,7 +59,7 @@ public class UserInterface2_GUI: ShaderGUI {
     }
 
     static GUIContent MakeLabel(MaterialProperty property, string tooltip = null) {
-        staticLabel.text = property.name;
+        staticLabel.text = property.displayName;
         staticLabel.tooltip = tooltip;
         return staticLabel;
     }

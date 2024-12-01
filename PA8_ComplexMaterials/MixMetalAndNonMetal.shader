@@ -6,7 +6,7 @@
 		[NoScaleOffset] _NormalMap ("Normals", 2D) = "bump" {}
 		_BumpScale ("Bump Scale", Float) = 1
 
-		// STEP 1: Metallic Map
+		// STEP 1: 添加 Metallic Map
 		[NoScaleOffset] _MetallicMap ("Metallic", 2D) = "white" {}
 		[Gamma] _Metallic ("Metallic", Range(0, 1)) = 0
 		_Smoothness ("Smoothness", Range(0, 1)) = 0.1
@@ -27,7 +27,7 @@
 			}
 			CGPROGRAM
 			#pragma target 3.0
-			// STEP 3: Custom Shader Keywords
+			// STEP2: 添加对于 Material 的 shader feature 指令
 			#pragma shader_feature _METALLIC_MAP
 			#pragma multi_compile _ SHADOWS_SCREEN
 			#pragma multi_compile _ VERTEXLIGHT_ON

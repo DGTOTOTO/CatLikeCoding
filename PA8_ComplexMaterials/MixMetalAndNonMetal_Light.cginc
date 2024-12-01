@@ -11,7 +11,7 @@ float4 _MainTex_ST, _DetailTex_ST;
 sampler2D _NormalMap, _DetailNormalMap;
 float _BumpScale, _DetailBumpScale;
 
-// STEP 1: Metallic Map
+// STEP 1: 添加 Metallic Map 相应变量
 sampler2D _MetallicMap;
 float _Metallic;
 float _Smoothness;
@@ -40,11 +40,8 @@ struct Interpolators {
 	#endif
 };
 
-// STEP 1: Metallic Map
-// create a function to retrieve the metallic value of a fragment
+// STEP 2: 添加 GetMetallic 函数取得 Metallic 值
 float GetMetallic(Interpolators i) {
-	// STEP 3: Custom Shader Keywords
-	// 调整 GetMetallic 函数，决定 sample map 还是返回 uniform value
 	#if defined(_METALLIC_MAP)
 		return tex2D(_MetallicMap, i.uv.xy).r;
 	#else
@@ -200,7 +197,7 @@ float4 Frag(Interpolators i) : SV_TARGET {
 
 	float3 specularTint;
 	float oneMinusReflectivity;
-	// STEP2-2 adjust light energy configuration
+	// STEP 2: 调用 GetMetallic 函数作为能量守恒参数
 	albedo = DiffuseAndSpecularFromMetallic(
 		albedo, GetMetallic(i), specularTint, oneMinusReflectivity
 	);
