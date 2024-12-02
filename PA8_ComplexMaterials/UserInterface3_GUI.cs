@@ -24,7 +24,7 @@ public class UserInterface3_GUI: ShaderGUI {
         DoNormals();
         editor.TextureScaleOffsetProperty(mainTex);
     }
-
+    
     void DoNormals() {
         MaterialProperty map = FindProperty("_NormalMap");
         editor.TexturePropertySingleLine(

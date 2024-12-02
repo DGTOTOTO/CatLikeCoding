@@ -28,7 +28,7 @@ public class MixMetalAndNonMetal_GUI: ShaderGUI {
 		DoNormals();
 		editor.TextureScaleOffsetProperty(mainTex);
 	}
-
+	
 	void DoNormals() {
 		MaterialProperty map = FindProperty("_NormalMap");
 		editor.TexturePropertySingleLine(MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null);

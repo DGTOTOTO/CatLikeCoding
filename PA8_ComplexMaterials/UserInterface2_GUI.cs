@@ -24,7 +24,7 @@ public class UserInterface2_GUI: ShaderGUI {
         DoNormals();
         editor.TextureScaleOffsetProperty(mainTex);
     }
-
+    
     void DoNormals() {
         MaterialProperty map = FindProperty("_NormalMap");
         // hide bump scale when there's no bump map
