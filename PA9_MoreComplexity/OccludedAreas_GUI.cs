@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class Emissive_GUI: ShaderGUI {
+public class OccludedAreas_GUI : ShaderGUI {
 	enum SmoothnessSource {
 		Uniform, Albedo, Metallic
 	}
@@ -27,15 +27,16 @@ public class Emissive_GUI: ShaderGUI {
 		DoMetallic();
 		DoSmoothness();
 		DoNormals();
+		DoOcclusion();
 		DoEmission();
 		editor.TextureScaleOffsetProperty(mainTex);
 	}
-	
+
 	void DoNormals() {
 		MaterialProperty map = FindProperty("_NormalMap");
 		editor.TexturePropertySingleLine(MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null);
 	}
-    	
+
 	void DoMetallic() {
 		MaterialProperty map = FindProperty("_MetallicMap");
 		EditorGUI.BeginChangeCheck();
@@ -64,6 +65,18 @@ public class Emissive_GUI: ShaderGUI {
 			SetKeyword("_SMOOTHNESS_METALLIC", source == SmoothnessSource.Metallic);
 		}
 		EditorGUI.indentLevel -= 3;
+	}
+
+	void DoOcclusion() {
+		MaterialProperty map = FindProperty("_OcclusionMap");
+		EditorGUI.BeginChangeCheck();
+		editor.TexturePropertySingleLine(
+			MakeLabel(map, "Occlusion (G)"), map,
+			map.textureValue ? FindProperty("_OcclusionStrength") : null
+		);
+		if (EditorGUI.EndChangeCheck()) {
+			SetKeyword("_OCCLUSION_MAP", map.textureValue);
+		}
 	}
 
 	void DoEmission() {

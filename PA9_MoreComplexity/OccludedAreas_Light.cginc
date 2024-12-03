@@ -1,5 +1,5 @@
-#if !defined(COMPLEXMATERIALS_EMISSIVE_LIGHT)
-#define COMPLEXMATERIALS_EMISSIVE_LIGHT
+#if !defined(MORECOMPLEXITY_OCCLUDEDAREAS_LIGHT)
+#define MORECOMPLEXITY_OCCLUDEDAREAS_LIGHT
 
 #include "UnityPBSLighting.cginc"
 #include "AutoLight.cginc"
@@ -14,6 +14,9 @@ float _BumpScale, _DetailBumpScale;
 sampler2D _MetallicMap;
 float _Metallic;
 float _Smoothness;
+
+sampler2D _OcclusionMap;
+float _OcclusionStrength;
 
 sampler2D _EmissionMap;
 float3 _Emission;
@@ -58,6 +61,14 @@ float GetSmoothness(Interpolators i) {
 		smoothness = tex2D(_MetallicMap, i.uv.xy).a;
 	#endif
 	return smoothness * _Smoothness;
+}
+
+float GetOcclusion(Interpolators i) {
+	#if defined(_OCCLUSION_MAP)
+		return lerp(1, tex2D(_OcclusionMap, i.uv.xy).g, _OcclusionStrength);
+	#else
+		return 1;
+	#endif
 }
 
 float3 GetEmission(Interpolators i) {
@@ -185,6 +196,10 @@ UnityIndirect CreateIndirectLight(Interpolators i, float3 viewDir) {
 		#else
 			indirectLight.specular = probe0;
 		#endif
+
+		float occlusion = GetOcclusion(i);
+		indirectLight.diffuse *= occlusion;
+		indirectLight.specular *= occlusion;
 	#endif
 
 	return indirectLight;

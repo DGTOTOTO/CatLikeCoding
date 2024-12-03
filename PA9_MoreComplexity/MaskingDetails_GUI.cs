@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class Emissive_GUI: ShaderGUI {
+public class MaskingDetails_GUI: ShaderGUI {
 	enum SmoothnessSource {
 		Uniform, Albedo, Metallic
 	}
@@ -27,15 +27,17 @@ public class Emissive_GUI: ShaderGUI {
 		DoMetallic();
 		DoSmoothness();
 		DoNormals();
+		DoOcclusion();
 		DoEmission();
+		DoDetailMask();
 		editor.TextureScaleOffsetProperty(mainTex);
 	}
-	
+
 	void DoNormals() {
 		MaterialProperty map = FindProperty("_NormalMap");
 		editor.TexturePropertySingleLine(MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null);
 	}
-    	
+
 	void DoMetallic() {
 		MaterialProperty map = FindProperty("_MetallicMap");
 		EditorGUI.BeginChangeCheck();
@@ -66,12 +68,35 @@ public class Emissive_GUI: ShaderGUI {
 		EditorGUI.indentLevel -= 3;
 	}
 
+	void DoOcclusion() {
+		MaterialProperty map = FindProperty("_OcclusionMap");
+		EditorGUI.BeginChangeCheck();
+		editor.TexturePropertySingleLine(
+			MakeLabel(map, "Occlusion (G)"), map,
+			map.textureValue ? FindProperty("_OcclusionStrength") : null
+		);
+		if (EditorGUI.EndChangeCheck()) {
+			SetKeyword("_OCCLUSION_MAP", map.textureValue);
+		}
+	}
+
 	void DoEmission() {
 		MaterialProperty map = FindProperty("_EmissionMap");
 		EditorGUI.BeginChangeCheck();
 		editor.TexturePropertyWithHDRColor(MakeLabel(map, "Emission (RGB)"), map, FindProperty("_Emission"), false);
 		if (EditorGUI.EndChangeCheck()) {
 			SetKeyword("_EMISSION_MAP", map.textureValue);
+		}
+	}
+
+	void DoDetailMask() {
+		MaterialProperty mask = FindProperty("_DetailMask");
+		EditorGUI.BeginChangeCheck();
+		editor.TexturePropertySingleLine(
+			MakeLabel(mask, "Detail Mask (A)"), mask
+		);
+		if (EditorGUI.EndChangeCheck()) {
+			SetKeyword("_DETAIL_MASK", mask.textureValue);
 		}
 	}
 
