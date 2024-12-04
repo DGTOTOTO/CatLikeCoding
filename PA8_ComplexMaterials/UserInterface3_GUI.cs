@@ -3,7 +3,7 @@ using UnityEditor;
 using System;
 using UnityEngine.UI;
 
-public class UserInterface3_GUI: ShaderGUI {
+public class UserInterface3_GUI : ShaderGUI {
     MaterialEditor editor;
     MaterialProperty[] properties;
 
@@ -15,7 +15,7 @@ public class UserInterface3_GUI: ShaderGUI {
         DoSecondary();
     }
 
-    void DoMain(){
+    void DoMain() {
         GUILayout.Label("Main Maps", EditorStyles.boldLabel);
         MaterialProperty mainTex = FindProperty("_MainTex");
         editor.TexturePropertySingleLine(MakeLabel(mainTex, "Albedo(RGB)"), mainTex, FindProperty("_Tint"));
@@ -24,7 +24,7 @@ public class UserInterface3_GUI: ShaderGUI {
         DoNormals();
         editor.TextureScaleOffsetProperty(mainTex);
     }
-    
+
     void DoNormals() {
         MaterialProperty map = FindProperty("_NormalMap");
         editor.TexturePropertySingleLine(

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-public class SmoothnessMaps_GUI: ShaderGUI {
+public class SmoothnessMaps_GUI : ShaderGUI {
 	// STEP 2: 展示存储源选项
 	enum SmoothnessSource {
 		Uniform, Albedo, Metallic
@@ -30,17 +30,17 @@ public class SmoothnessMaps_GUI: ShaderGUI {
 		DoNormals();
 		editor.TextureScaleOffsetProperty(mainTex);
 	}
-	
+
 	void DoNormals() {
 		MaterialProperty map = FindProperty("_NormalMap");
 		editor.TexturePropertySingleLine(MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null);
 	}
-    	
+
 	void DoMetallic() {
 		MaterialProperty map = FindProperty("_MetallicMap");
 		EditorGUI.BeginChangeCheck();
 		editor.TexturePropertySingleLine(MakeLabel(map, "Metallic(R)"), map, map.textureValue ? null : FindProperty("_Metallic"));
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			SetKeyword("_METALLIC_MAP", map.textureValue);
 		}
 	}
@@ -48,9 +48,9 @@ public class SmoothnessMaps_GUI: ShaderGUI {
 	void DoSmoothness() {
 		// STEP 2: 使用当前 smoothness 源
 		SmoothnessSource source = SmoothnessSource.Uniform;
-		if (IsKeywordEnabled("_SMOOTHNESS_ALBEDO")) {
+		if(IsKeywordEnabled("_SMOOTHNESS_ALBEDO")) {
 			source = SmoothnessSource.Albedo;
-		} else if (IsKeywordEnabled("_SMOOTHNESS_METALLIC")) {
+		} else if(IsKeywordEnabled("_SMOOTHNESS_METALLIC")) {
 			source = SmoothnessSource.Metallic;
 		}
 		MaterialProperty slider = FindProperty("_Smoothness");
@@ -61,7 +61,7 @@ public class SmoothnessMaps_GUI: ShaderGUI {
 		EditorGUI.BeginChangeCheck();
 		// STEP 2: 创建 popup list
 		source = (SmoothnessSource)EditorGUILayout.EnumPopup(MakeLabel("Source"), source);
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			// STEP 3: 录制 old 动作
 			RecordAction("Smoothness Source");
 			SetKeyword("_SMOOTHNESS_ALBEDO", source == SmoothnessSource.Albedo);
@@ -100,7 +100,7 @@ public class SmoothnessMaps_GUI: ShaderGUI {
 	}
 
 	void SetKeyword(string keyword, bool state) {
-		if (state) {
+		if(state) {
 			target.EnableKeyword(keyword);
 		} else {
 			target.DisableKeyword(keyword);
@@ -108,11 +108,11 @@ public class SmoothnessMaps_GUI: ShaderGUI {
 	}
 
 	// 追踪 keyword 选用
-	bool IsKeywordEnabled (string keyword) {
+	bool IsKeywordEnabled(string keyword) {
 		return target.IsKeywordEnabled(keyword);
 	}
 
-	void RecordAction (string label) {
+	void RecordAction(string label) {
 		editor.RegisterPropertyChangeUndo(label);
 	}
 }

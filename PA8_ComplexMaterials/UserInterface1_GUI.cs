@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 
 // a custom inspector: extends(继承) "UnityEditor.ShaderGUI"
-public class UserInterface1_GUI: ShaderGUI {
+public class UserInterface1_GUI : ShaderGUI {
     // To show the properties of our material, have to access them in our methods
     MaterialEditor editor;
     MaterialProperty[] properties;
@@ -33,7 +33,7 @@ public class UserInterface1_GUI: ShaderGUI {
         staticLabel.tooltip = tooltip;
         return staticLabel;
     }
-    
+
     // Creat a MakeLabel variant
     static GUIContent MakeLabel(MaterialProperty property, string tooltip = null) {
         staticLabel.text = property.displayName;

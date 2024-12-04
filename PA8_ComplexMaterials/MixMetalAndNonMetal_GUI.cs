@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class MixMetalAndNonMetal_GUI: ShaderGUI {
+public class MixMetalAndNonMetal_GUI : ShaderGUI {
 	static GUIContent staticLabel = new GUIContent();
 	// STEP 3: 声明 Material 类型对象
 	Material target;
@@ -28,19 +28,19 @@ public class MixMetalAndNonMetal_GUI: ShaderGUI {
 		DoNormals();
 		editor.TextureScaleOffsetProperty(mainTex);
 	}
-	
+
 	void DoNormals() {
 		MaterialProperty map = FindProperty("_NormalMap");
 		editor.TexturePropertySingleLine(MakeLabel(map), map, map.textureValue ? FindProperty("_BumpScale") : null);
 	}
-    	
+
 	void DoMetallic() {
 		MaterialProperty map = FindProperty("_MetallicMap");
 		// STEP 3: BeginChangeCheck & EndChangeCheck 函数监控调用 SetKeyword 函数
 		EditorGUI.BeginChangeCheck();
 		// STEP 2: 添加材质选择窗口，调整 slider 与 map 逻辑为 “OR”
 		editor.TexturePropertySingleLine(MakeLabel(map, "Metallic(R)"), map, map.textureValue ? null : FindProperty("_Metallic"));
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			SetKeyword("_METALLIC_MAP", map.textureValue);
 		}
 	}
@@ -83,7 +83,7 @@ public class MixMetalAndNonMetal_GUI: ShaderGUI {
 
 	// STEP 3: SetKeyword 函数设置关键字启用状态
 	void SetKeyword(string keyword, bool state) {
-		if (state) {
+		if(state) {
 			target.EnableKeyword(keyword);
 		} else {
 			target.DisableKeyword(keyword);

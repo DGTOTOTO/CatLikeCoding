@@ -41,16 +41,16 @@ public class OccludedAreas_GUI : ShaderGUI {
 		MaterialProperty map = FindProperty("_MetallicMap");
 		EditorGUI.BeginChangeCheck();
 		editor.TexturePropertySingleLine(MakeLabel(map, "Metallic(R)"), map, map.textureValue ? null : FindProperty("_Metallic"));
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			SetKeyword("_METALLIC_MAP", map.textureValue);
 		}
 	}
 
 	void DoSmoothness() {
 		SmoothnessSource source = SmoothnessSource.Uniform;
-		if (IsKeywordEnabled("_SMOOTHNESS_ALBEDO")) {
+		if(IsKeywordEnabled("_SMOOTHNESS_ALBEDO")) {
 			source = SmoothnessSource.Albedo;
-		} else if (IsKeywordEnabled("_SMOOTHNESS_METALLIC")) {
+		} else if(IsKeywordEnabled("_SMOOTHNESS_METALLIC")) {
 			source = SmoothnessSource.Metallic;
 		}
 		MaterialProperty slider = FindProperty("_Smoothness");
@@ -59,7 +59,7 @@ public class OccludedAreas_GUI : ShaderGUI {
 		EditorGUI.indentLevel += 1;
 		EditorGUI.BeginChangeCheck();
 		source = (SmoothnessSource)EditorGUILayout.EnumPopup(MakeLabel("Source"), source);
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			RecordAction("Smoothness Source");
 			SetKeyword("_SMOOTHNESS_ALBEDO", source == SmoothnessSource.Albedo);
 			SetKeyword("_SMOOTHNESS_METALLIC", source == SmoothnessSource.Metallic);
@@ -74,7 +74,7 @@ public class OccludedAreas_GUI : ShaderGUI {
 			MakeLabel(map, "Occlusion (G)"), map,
 			map.textureValue ? FindProperty("_OcclusionStrength") : null
 		);
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			SetKeyword("_OCCLUSION_MAP", map.textureValue);
 		}
 	}
@@ -83,7 +83,7 @@ public class OccludedAreas_GUI : ShaderGUI {
 		MaterialProperty map = FindProperty("_EmissionMap");
 		EditorGUI.BeginChangeCheck();
 		editor.TexturePropertyWithHDRColor(MakeLabel(map, "Emission (RGB)"), map, FindProperty("_Emission"), false);
-		if (EditorGUI.EndChangeCheck()) {
+		if(EditorGUI.EndChangeCheck()) {
 			SetKeyword("_EMISSION_MAP", map.textureValue);
 		}
 	}
@@ -118,18 +118,18 @@ public class OccludedAreas_GUI : ShaderGUI {
 	}
 
 	void SetKeyword(string keyword, bool state) {
-		if (state) {
+		if(state) {
 			target.EnableKeyword(keyword);
 		} else {
 			target.DisableKeyword(keyword);
 		}
 	}
 
-	bool IsKeywordEnabled (string keyword) {
+	bool IsKeywordEnabled(string keyword) {
 		return target.IsKeywordEnabled(keyword);
 	}
 
-	void RecordAction (string label) {
+	void RecordAction(string label) {
 		editor.RegisterPropertyChangeUndo(label);
 	}
 }
