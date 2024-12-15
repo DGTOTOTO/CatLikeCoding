@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System;
-
 public class UserInterface2_GUI : ShaderGUI {
     MaterialEditor editor;
     MaterialProperty[] properties;
